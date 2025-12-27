@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 9a5ced8073a2258438930a7429df3b93
+guid: 5b2bc735a794bbb4a8e53136977d7c1d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4608988584043512144
-    second: TimeBar_0
+      213: 4856366345563577530
+    second: Howto3_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TimeBar_0
+      name: Howto3_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 3000
-        height: 152
+        width: 800
+        height: 600
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0be71426d459900c0800000000000000
-      internalID: -4608988584043512144
+      spriteID: abc9a7e0677456340800000000000000
+      internalID: 4856366345563577530
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      TimeBar_0: -4608988584043512144
+      Howto3_0: 4856366345563577530
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
