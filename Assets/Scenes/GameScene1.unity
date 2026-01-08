@@ -892,6 +892,7 @@ SpriteRenderer:
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 --- !u!114 &2008391659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -904,6 +905,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2bafe9ad5551084dacdca298eb7ab2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimeBarScript
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 --- !u!114 &2008391660
