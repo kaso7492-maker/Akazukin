@@ -6,7 +6,7 @@ using System.Collections;
 public class TimeManagerScript : MonoBehaviour
 {
     public float limitTime = 30f;              // 制限時間（30秒）
-    float remainingTime;                       // 残り時間
+    public float remainingTime;                       // 残り時間
     float initialBarWidth;                     // 最初のTimeBarの幅
 
     public RectTransform timeBar;              // TimeBarオブジェクト
