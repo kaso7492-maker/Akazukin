@@ -1,147 +1,119 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class ClearTransitionScript : MonoBehaviour
 {
     [Header("Scene")]
-    public string nextSceneName = "GameCreal1";
+    public string nextSceneName = "GameClear1";
 
-    [Header("References (GameScene2 only)")]
+    [Header("GameScene2 References")]
     public TimeManagerScript timeManager;
     public GameObject itemWolfSpawner;
     public PlayerMoveScript playerMoveScript;
 
-    [Header("Player")]
-    public Transform player;
-    public float playerMoveSpeed = 3f;
+    [Header("Clear Image")]
+    public GameObject clearTransitionImage;   // 画像 ClearTransition
 
-    [Header("Transition")]
-    public RectTransform transitionRect;
-    public CanvasGroup transitionCanvasGroup;
-    public float transitionMoveSpeed = 600f;
+    [Header("Fade")]
+    public CanvasGroup fadeCanvasGroup;
     public float fadeSpeed = 1.5f;
 
-    bool timeUp = false;
-    bool sceneChanging = false;
+    bool isClearing = false;
 
     void Start()
     {
-        // Player 自動取得（未設定対策）
-        if (player == null)
-        {
-            GameObject p = GameObject.FindGameObjectWithTag("Player");
-            if (p != null)
-                player = p.transform;
-        }
+        // Clear画像は最初は非表示
+        if (clearTransitionImage != null)
+            clearTransitionImage.SetActive(false);
 
-        // GameCreal1 側初期化
-        if (timeManager == null && transitionCanvasGroup != null)
+        // GameClear1 側の初期フェードイン設定
+        if (timeManager == null && fadeCanvasGroup != null)
         {
-            transitionCanvasGroup.gameObject.SetActive(true);
-            transitionCanvasGroup.alpha = 1f;
+            fadeCanvasGroup.alpha = 1f;
         }
     }
 
     void Update()
     {
-        // =====================
+        // =========================
         // GameScene2
-        // =====================
+        // =========================
         if (timeManager != null)
         {
-            if (!timeUp && timeManager.remainingTime <= 0)
+            if (!isClearing && timeManager.remainingTime <= 0)
             {
-                OnTimeUp();
-            }
-
-            if (timeUp && player != null)
-            {
-                MovePlayer();
-
-                if (player.position.y >= 3f)
-                {
-                    MoveTransitionUp();
-                }
+                StartCoroutine(ClearSequence());
             }
         }
-        // =====================
-        // GameCreal1
-        // =====================
+        // =========================
+        // GameClear1
+        // =========================
         else
         {
-            FadeOut();
+            FadeIn();
         }
     }
 
-    // --------------------
-    // TimeUp 処理
-    // --------------------
-    void OnTimeUp()
+    // -------------------------
+    // TimeUp → フェードアウト
+    // -------------------------
+    IEnumerator ClearSequence()
     {
-        timeUp = true;
+        isClearing = true;
 
-        // Spawner 非表示
+        // ItemWolfSpawner 非表示
         if (itemWolfSpawner != null)
             itemWolfSpawner.SetActive(false);
 
         // Item / Wolf 削除
-        DestroyAllWithTag("Item");
-        DestroyAllWithTag("Wolf");
+        DestroyByTag("Item");
+        DestroyByTag("Wolf");
 
-        // Player 操作不可
+        // Player 入力停止
         if (playerMoveScript != null)
             playerMoveScript.enabled = false;
-    }
 
-    // --------------------
-    // Player 移動 (0,10)
-    // --------------------
-    void MovePlayer()
-    {
-        Vector3 target = new Vector3(0f, 10f, player.position.z);
-        player.position = Vector3.MoveTowards(
-            player.position,
-            target,
-            playerMoveSpeed * Time.deltaTime
-        );
-    }
+        // Clear画像表示
+        if (clearTransitionImage != null)
+            clearTransitionImage.SetActive(true);
 
-    // --------------------
-    // Transition 上移動
-    // --------------------
-    void MoveTransitionUp()
-    {
-        if (sceneChanging || transitionRect == null) return;
+        // 2秒待つ
+        yield return new WaitForSeconds(2f);
 
-        transitionRect.anchoredPosition += Vector2.up * transitionMoveSpeed * Time.deltaTime;
-
-        if (transitionRect.anchoredPosition.y >= 500f)
+        // フェードアウト開始
+        while (fadeCanvasGroup.alpha < 1f)
         {
-            sceneChanging = true;
-            SceneManager.LoadScene(nextSceneName);
+            fadeCanvasGroup.alpha += fadeSpeed * Time.deltaTime;
+            yield return null;
+        }
+
+        fadeCanvasGroup.alpha = 1f;
+
+        SceneManager.LoadScene(nextSceneName);
+    }
+
+    // -------------------------
+    // GameClear1 フェードイン
+    // -------------------------
+    void FadeIn()
+    {
+        if (fadeCanvasGroup == null) return;
+
+        if (fadeCanvasGroup.alpha > 0f)
+        {
+            fadeCanvasGroup.alpha -= fadeSpeed * Time.deltaTime;
+        }
+        else
+        {
+            fadeCanvasGroup.alpha = 0f;
         }
     }
 
-    // --------------------
-    // フェードアウト
-    // --------------------
-    void FadeOut()
-    {
-        if (transitionCanvasGroup == null) return;
-
-        transitionCanvasGroup.alpha -= fadeSpeed * Time.deltaTime;
-
-        if (transitionCanvasGroup.alpha <= 0f)
-        {
-            transitionCanvasGroup.alpha = 0f;
-            transitionCanvasGroup.gameObject.SetActive(false);
-        }
-    }
-
-    // --------------------
+    // -------------------------
     // タグ削除
-    // --------------------
-    void DestroyAllWithTag(string tag)
+    // -------------------------
+    void DestroyByTag(string tag)
     {
         GameObject[] objs = GameObject.FindGameObjectsWithTag(tag);
         foreach (GameObject obj in objs)
