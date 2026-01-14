@@ -724,9 +724,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InstructionScript
   instructions:
-  - {fileID: -3993812469418027917, guid: 7daf5dc041908f343b7438795db120e6, type: 3}
-  - {fileID: 5236465747801173823, guid: cdfe23762e3cf1b4e9bb7fb67ccdebb7, type: 3}
-  - {fileID: 4856366345563577530, guid: 5b2bc735a794bbb4a8e53136977d7c1d, type: 3}
+  - {fileID: -7439283974882227657, guid: be26010b2aadf2943a549f54b7d09696, type: 3}
+  - {fileID: -6458726877418328580, guid: e900b842e4d28604884e9fa6aa6ad1b2, type: 3}
+  - {fileID: 3478557288972161191, guid: e7e627f82f787ec4684822120d7a89c5, type: 3}
   instructionImage: {fileID: 215389234}
   nextButton: {fileID: 1388052630}
   backButton: {fileID: 672694233}
