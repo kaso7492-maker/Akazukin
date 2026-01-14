@@ -1,64 +1,102 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class TimeManagerScript : MonoBehaviour
 {
-    public float limitTime = 30f;              // 制限時間（30秒）
-    public float remainingTime;                       // 残り時間
-    float initialBarWidth;                     // 最初のTimeBarの幅
+    public float limitTime = 30f;
+    public float remainingTime;
+    float initialBarWidth;
 
-    public RectTransform timeBar;              // TimeBarオブジェクト
-    //public GameObject endNoticeImage;          // EndNotice（画像）
-    //public GameObject player;                  // Playerオブジェクト
+    public RectTransform timeBar;
+
+    // ===== 追加 =====
+    [Header("Clear")]
+    public GameObject clearTransition;     // ClearTransition画像
+    public CanvasGroup fadeCanvasGroup;    // フェード用
+    public float fadeSpeed = 1f;
+
+    bool isTimeUp = false;
+
+    // ★ シーン間で共有
+    public static float sharedRemainingTime = -1f;
 
     void Start()
     {
-        // 残り時間を制限時間で初期化
-        remainingTime = limitTime;
+        if (sharedRemainingTime < 0f)
+            remainingTime = limitTime;
+        else
+            remainingTime = sharedRemainingTime;
 
-        // TimeBar の最初の幅を記録
         initialBarWidth = timeBar.sizeDelta.x;
+        UpdateTimeBar();
 
-        // EndNotice の非表示
-        //endNoticeImage.SetActive(false);
+        if (clearTransition != null)
+            clearTransition.SetActive(false);
+
+        if (fadeCanvasGroup != null)
+            fadeCanvasGroup.alpha = 0f;
     }
 
     void Update()
     {
         if (remainingTime > 0f)
         {
-            // 時間経過
             remainingTime -= Time.deltaTime;
 
-            // TimeBarの長さを更新
-            float newWidth = (remainingTime / limitTime) * initialBarWidth;
-            timeBar.sizeDelta = new Vector2(newWidth, timeBar.sizeDelta.y);
-
-            // 幅が 0 を下回らないように
             if (remainingTime <= 0f)
             {
                 remainingTime = 0f;
-                //StartCoroutine(TimeUp());
+                UpdateTimeBar();
+                sharedRemainingTime = remainingTime;
+
+                if (!isTimeUp)
+                    StartCoroutine(TimeUpSequence());
+            }
+            else
+            {
+                UpdateTimeBar();
+                sharedRemainingTime = remainingTime;
             }
         }
     }
 
-    /*
-    IEnumerator TimeUp()
+    IEnumerator TimeUpSequence()
     {
-        // Player を消失
-        Destroy(player);
+        isTimeUp = true;
 
-        // EndNotice を表示
-        endNoticeImage.SetActive(true);
+        // ClearTransition 表示
+        if (clearTransition != null)
+            clearTransition.SetActive(true);
 
-        // 1秒待つ
+        // 2秒待つ
         yield return new WaitForSeconds(2f);
 
-        // ScoreScene に移行
-        SceneManager.LoadScene("ScoreScene");
+        // フェードアウト
+        while (fadeCanvasGroup.alpha < 1f)
+        {
+            fadeCanvasGroup.alpha += fadeSpeed * Time.deltaTime;
+            yield return null;
+        }
+
+        fadeCanvasGroup.alpha = 1f;
+
+        // ===== スコア判定 =====
+        int score = 0;
+        if (ScoreManagerScript.instance != null)
+            score = ScoreManagerScript.instance.score;
+
+        if (score >= 100)
+            SceneManager.LoadScene("GameClear1");
+        else
+            SceneManager.LoadScene("GameClear2");
     }
-    */
+
+    void UpdateTimeBar()
+    {
+        float ratio = remainingTime / limitTime;
+        float newWidth = ratio * initialBarWidth;
+        timeBar.sizeDelta = new Vector2(newWidth, timeBar.sizeDelta.y);
+    }
 }

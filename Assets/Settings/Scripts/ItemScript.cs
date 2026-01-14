@@ -27,10 +27,16 @@ public class ItemScript : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // PlayerÇ…êGÇÍÇΩÇÁè¡ãé
         if (other.gameObject.CompareTag("Player"))
         {
+            // ÉXÉRÉAâ¡éZ
+            if (ScoreManagerScript.instance != null)
+            {
+                ScoreManagerScript.instance.AddScore(point);
+            }
+
             Destroy(gameObject);
         }
     }
+
 }
