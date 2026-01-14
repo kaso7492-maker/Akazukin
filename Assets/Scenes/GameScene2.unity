@@ -485,7 +485,7 @@ GameObject:
   - component: {fileID: 590006020}
   - component: {fileID: 590006019}
   - component: {fileID: 590006022}
-  - component: {fileID: 590006021}
+  - component: {fileID: 590006023}
   m_Layer: 5
   m_Name: Transition
   m_TagString: Untagged
@@ -550,25 +550,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 590006017}
   m_CullTransparentMesh: 1
---- !u!114 &590006021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 590006017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ae8dfe6edaabae4bb641b8bfc2bfbb5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TransitionScript
-  timeManager: {fileID: 287413931}
-  itemWolfSpawner: {fileID: 1115633437}
-  player: {fileID: 445297851}
-  transitionRect: {fileID: 590006018}
-  transitionCanvasGroup: {fileID: 590006022}
-  playerMoveSpeed: 5
-  transitionMoveSpeed: 600
 --- !u!225 &590006022
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -581,6 +562,28 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &590006023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 590006017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baa64a59e7a2d594daca42086c3ad7d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClearTransitionScript
+  nextSceneName: GameClear1
+  timeManager: {fileID: 287413931}
+  itemWolfSpawner: {fileID: 1115633437}
+  playerMoveScript: {fileID: 445297854}
+  player: {fileID: 445297856}
+  playerMoveSpeed: 3
+  transitionRect: {fileID: 590006018}
+  transitionCanvasGroup: {fileID: 590006022}
+  transitionMoveSpeed: 600
+  fadeSpeed: 1.5
 --- !u!1 &635219416
 GameObject:
   m_ObjectHideFlags: 0
