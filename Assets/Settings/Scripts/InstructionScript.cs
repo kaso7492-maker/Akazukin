@@ -13,6 +13,7 @@ public class InstructionScript : MonoBehaviour
     public GameObject backButton;
     public GameObject closeButton;
     public GameObject playButton;
+    public FadeOutScript fadeOutManager; // FadeOutManager ‚ðƒhƒ‰ƒbƒO
 
     private int currentIndex = 0;
 
@@ -81,7 +82,7 @@ public class InstructionScript : MonoBehaviour
 
     public void OnClickPlay()
     {
-        SceneManager.LoadScene("GameScene1");
+        fadeOutManager.FadeToScene("GameScene1");
     }
 
     private void UpdateButtons()

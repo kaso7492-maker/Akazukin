@@ -1,10 +1,10 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class StartButtonScript : MonoBehaviour
 {
     public Button startButton;
+    public FadeOutScript fadeOutManager; // Å© í«â¡
 
     void Start()
     {
@@ -13,6 +13,6 @@ public class StartButtonScript : MonoBehaviour
 
     void OnClickStart()
     {
-        SceneManager.LoadScene("GameScene1");
+        fadeOutManager.FadeToScene("GameScene1");
     }
 }

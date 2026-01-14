@@ -4,30 +4,23 @@ using System.Collections;
 
 public class FadeOutScript : MonoBehaviour
 {
-    public CanvasGroup fadeCanvasGroup;
+    public CanvasGroup fadeCanvasGroup;  // FadePanel の CanvasGroup
     public float fadeSpeed = 1f;
-    public string nextSceneName;
 
     bool isFading = false;
 
-    void Start()
-    {
-        // 念のため最初は透明
-        if (fadeCanvasGroup != null)
-            fadeCanvasGroup.alpha = 0f;
-    }
-
-    // 外部（ボタンなど）から呼ぶ
-    public void StartFadeOut()
+    // 外部から呼ぶ（Scene名を渡す）
+    public void FadeToScene(string nextSceneName)
     {
         if (!isFading)
-            StartCoroutine(FadeOut());
+            StartCoroutine(FadeAndLoad(nextSceneName));
     }
 
-    IEnumerator FadeOut()
+    IEnumerator FadeAndLoad(string nextSceneName)
     {
         isFading = true;
 
+        // フェードアウト
         while (fadeCanvasGroup.alpha < 1f)
         {
             fadeCanvasGroup.alpha += fadeSpeed * Time.deltaTime;
