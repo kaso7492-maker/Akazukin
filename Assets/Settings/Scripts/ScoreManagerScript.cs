@@ -41,9 +41,15 @@ public class ScoreManagerScript : MonoBehaviour
         UpdateScoreText();
     }
 
-    // シーン切替時にUIを再取得
+    // ★ シーン切替時の処理
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        // ===== TitleSceneならスコアリセット =====
+        if (scene.name == "TitleScene")
+        {
+            score = 0;
+        }
+
         FindScoreTextInScene();
         UpdateScoreText();
     }
@@ -54,6 +60,10 @@ public class ScoreManagerScript : MonoBehaviour
         if (obj != null)
         {
             scoreValueText = obj.GetComponent<TMP_Text>();
+        }
+        else
+        {
+            scoreValueText = null;
         }
     }
 

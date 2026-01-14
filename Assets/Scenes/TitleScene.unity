@@ -725,7 +725,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InstructionScript
   instructions:
   - {fileID: -7439283974882227657, guid: be26010b2aadf2943a549f54b7d09696, type: 3}
-  - {fileID: -6458726877418328580, guid: e900b842e4d28604884e9fa6aa6ad1b2, type: 3}
+  - {fileID: 83700134284865446, guid: eab1d4ca2ef6c1a4ca85345c020e336f, type: 3}
   - {fileID: 3478557288972161191, guid: e7e627f82f787ec4684822120d7a89c5, type: 3}
   instructionImage: {fileID: 215389234}
   nextButton: {fileID: 1388052630}
